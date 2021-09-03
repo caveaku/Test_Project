@@ -34,12 +34,7 @@ pipeline {
               }
             }
           }
-         stage('Email Notification') {
-         mail bcc: '', body: '''Hi Welcome to jenkins email alerts
-         Thanks
-         Hari''', cc: '', from: '', replyTo: '', subject: 'Jenkins Job', to: 'Hari.kojibello058@gmail.com'
-       }
-        stage('Deployment Approval') {
+           stage('Deployment Approval') {
             steps {
               script {
                 timeout(time: 10, unit: 'MINUTES') {
