@@ -6,7 +6,7 @@ pipeline {
     }
     environment { 
         AWS_REGION = 'us-west-2'
-        ECRREGISTRY = '735972722491.dkr.ecr.us-west-2.amazonaws.com/haplet-registory'
+        ECRREGISTRY = '735972722491.dkr.ecr.us-west-2.amazonaws.com'
         IMAGENAME = 'kojibello-tomcat'
         IMAGE_TAG = 'latest'
     }
