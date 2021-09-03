@@ -30,7 +30,7 @@ pipeline {
             agent any
             steps {
               withSonarQubeEnv('sonnar-scanner') {
-                sh "mvn clean package sonar:sonar -Dsonar.host.url=http://18.237.104.114:9000 -Dsonar.login=cc92b9fece4552a752667e25ff8a1064f7447e3d -Dsonar.projectKey=jenkins -Dsonar.projectName=haplet -Dsonar.projectVersion=1.0"
+                sh "mvn clean package sonar:sonar -Dsonar.host.url=http://52.39.249.160:9000 -Dsonar.login=cc92b9fece4552a752667e25ff8a1064f7447e3d -Dsonar.projectKey=jenkins -Dsonar.projectName=haplet -Dsonar.projectVersion=1.0"
               }
             }
           }
