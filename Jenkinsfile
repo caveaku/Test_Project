@@ -11,7 +11,7 @@ pipeline {
         IMAGE_TAG = 'latest'
     }
     stages {
-       stage ('Cloning git') {
+       stage ('Cloning git & Build') {
           steps {
                 checkout scm
             }
@@ -21,12 +21,12 @@ pipeline {
                 sh 'mvn clean package -DskipTests=true'
             }
         }
-         stage('Unit Tests') {
+         stage('Unit Tests Execution') {
             steps {
                 sh 'mvn surefire:test'
             }
         }
-         stage("build & SonarQube analysis") {
+         stage("Static Code analysis With SonarQube") {
             agent any
             steps {
               withSonarQubeEnv('sonnar-scanner') {
@@ -34,14 +34,15 @@ pipeline {
               }
             }
           }
-        stage('docker build and tag') {
+        stage('docker build and Tag Application') {
             steps {
                  sh 'cp ./webapp/target/webapp.war .'
                  sh 'docker build -t ${IMAGENAME} .'
                  sh 'docker tag ${IMAGENAME}:${IMAGE_TAG} ${ECRREGISTRY}/${IMAGENAME}:${IMAGE_TAG}'
             }
         }
-         stage('docker push') {
+         // For non-release candidates, This can be as simple as tagging the artifact(s) with a timestamp and the build number of the job performing the CI/CD process.
+         stage('Publish the Artifact to ECR') {
             steps {
                 sh 'docker push ${ECRREGISTRY}/${IMAGENAME}:${IMAGE_TAG}'
             }
