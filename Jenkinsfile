@@ -40,6 +40,11 @@ pipeline {
                  sh 'docker build -t ${IMAGENAME}:${IMAGE_TAG} .'
                  sh 'docker tag ${IMAGENAME}:${IMAGE_TAG} ${ECRREGISTRY}/${IMAGENAME}:${IMAGE_TAG}'
             }
-        }  
+        }
+         stage('docker push') {
+            steps {
+                sh 'docker push ${ECRREGISTRY}/${IMAGENAME}:${IMAGE_TAG}'
+            }
+        }       
         }
 }
