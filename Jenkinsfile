@@ -7,7 +7,7 @@ pipeline {
     environment { 
         AWS_REGION = 'us-east-1'
         ECRREGISTRY = '464599248654.dkr.ecr.us-east-1.amazonaws.com'
-        IMAGENAME = 'demomk'
+        IMAGENAME = 'kojibello-tomcat'
         IMAGE_TAG = 'latest'
     }
     stages {
@@ -45,8 +45,8 @@ pipeline {
            } 
         stage('docker build and tag') {
             steps {
-                sh 'cp ./webapp/target/webapp.* .'
-                 //sh 'docker build -t ${IMAGENAME}:${IMAGE_TAG} .'
+                //sh 'cp ./webapp/target/webapp.* .'
+                 sh 'docker build -t ${IMAGENAME}:${IMAGE_TAG} .'
                   //sh 'docker tag ${IMAGENAME}:${IMAGE_TAG} ${ECRREGISTRY}/${IMAGENAME}:${IMAGE_TAG}'
             }
         }  
