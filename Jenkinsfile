@@ -37,7 +37,7 @@ pipeline {
            stage('Deployment Approval') {
             steps {
               script {
-                timeout(time: 10, unit: 'MINUTES') {
+                timeout(time: 20, unit: 'MINUTES') {
                  input(id: 'Deploy Gate', message: 'Deploy Application to Dev ?', ok: 'Deploy')
                  }
                }
