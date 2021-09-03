@@ -13,7 +13,7 @@ pipeline {
     stages {
        stage ('Cloning git') {
           steps {
-                sh 'git clone https://github.com/Bkoji1150/Test_Project.git'
+                checkout scm
             }
         }
          stage('Compile') {
