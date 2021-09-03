@@ -5,8 +5,8 @@ pipeline {
         jdk 'jdk'
     }
     environment { 
-        AWS_REGION = 'us-east-1'
-        ECRREGISTRY = '464599248654.dkr.ecr.us-east-1.amazonaws.com'
+        AWS_REGION = 'us-west-2'
+        ECRREGISTRY = '735972722491.dkr.ecr.us-west-2.amazonaws.com/haplet-registory'
         IMAGENAME = 'kojibello-tomcat'
         IMAGE_TAG = 'latest'
     }
@@ -34,20 +34,11 @@ pipeline {
               }
             }
           }
-           stage('Deployment Approval') {
-            steps {
-              script {
-                timeout(time: 20, unit: 'MINUTES') {
-                 input(id: 'Deploy Gate', message: 'Deploy Application to Dev ?', ok: 'Deploy')
-                 }
-               }
-            }
-           } 
         stage('docker build and tag') {
             steps {
                  sh 'cp ./webapp/target/webapp.war .'
                  sh 'docker build -t ${IMAGENAME}:${IMAGE_TAG} .'
-                  //sh 'docker tag ${IMAGENAME}:${IMAGE_TAG} ${ECRREGISTRY}/${IMAGENAME}:${IMAGE_TAG}'
+                 sh 'docker tag ${IMAGENAME}:${IMAGE_TAG} ${ECRREGISTRY}/${IMAGENAME}:${IMAGE_TAG}'
             }
         }  
         }
