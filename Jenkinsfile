@@ -37,7 +37,7 @@ pipeline {
          stage('Email Notification') {
          mail bcc: '', body: '''Hi Welcome to jenkins email alerts
          Thanks
-         Hari''', cc: '', from: '', replyTo: '', subject: 'Jenkins Job', to: 'hari.kojibello058@gmail.com'
+         Hari''', cc: '', from: '', replyTo: '', subject: 'Jenkins Job', to: 'Hari.kojibello058@gmail.com'
        }
         stage('Deployment Approval') {
             steps {
