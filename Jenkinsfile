@@ -41,11 +41,6 @@ pipeline {
                  sh 'docker tag ${IMAGENAME}:${IMAGE_TAG} ${ECRREGISTRY}/${IMAGENAME}:${IMAGE_TAG}'
             }
         }
-        stage('AWS ecr login') {
-            steps {
-                sh 'aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECRREGISTRY}'
-            }
-        }  
         stage('Deployment Approval') {
             steps {
               script {
