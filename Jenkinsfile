@@ -42,6 +42,15 @@ pipeline {
                  sh 'docker tag ${IMAGENAME}:${IMAGE_TAG} ${ECRREGISTRY}/${IMAGENAME}:${IMAGE_TAG}'
             }
         }
+        stage('Deployment Approval') {
+            steps {
+              script {
+                timeout(time: 20, unit: 'MINUTES') {
+                 input(id: 'Deploy Gate', message: 'Deploy Application to Dev ?', ok: 'Deploy')
+                 }
+               }
+            }
+        } 
          // For non-release candidates, This can be as simple as tagging the artifact(s) with a timestamp and the build number of the job performing the CI/CD process.
          stage('Publish the Artifact to ECR') {
             steps {
