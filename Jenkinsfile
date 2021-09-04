@@ -54,6 +54,7 @@ pipeline {
          stage('Publish the Artifact to ECR') {
             steps {
                 sh 'docker push ${ECRREGISTRY}/${IMAGENAME}:${IMAGE_TAG}'
+                sh 'docker rmi ${ECRREGISTRY}/${IMAGENAME}:${IMAGE_TAG}'
             }
         }       
         }
