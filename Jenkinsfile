@@ -36,6 +36,7 @@ pipeline {
           }
         stage('docker build and Tag Application') {
             steps {
+                 sh 'docker rmi $(docker images -a)'
                  sh 'cp ./webapp/target/webapp.war .'
                  sh 'docker build -t ${IMAGENAME} .'
                  sh 'docker tag ${IMAGENAME}:${IMAGE_TAG} ${ECRREGISTRY}/${IMAGENAME}:${IMAGE_TAG}'
@@ -49,8 +50,7 @@ pipeline {
                  }
                }
             }
-   
-        } 
+         } 
          // For non-release candidates, This can be as simple as tagging the artifact(s) with a timestamp and the build number of the job performing the CI/CD process.
          stage('Publish the Artifact to ECR') {
             steps {
