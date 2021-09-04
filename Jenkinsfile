@@ -36,7 +36,6 @@ pipeline {
           }
         stage('docker build and Tag Application') {
             steps {
-                 sh 'docker rmi $(docker images -a)'
                  sh 'cp ./webapp/target/webapp.war .'
                  sh 'docker build -t ${IMAGENAME} .'
                  sh 'docker tag ${IMAGENAME}:${IMAGE_TAG} ${ECRREGISTRY}/${IMAGENAME}:${IMAGE_TAG}'
