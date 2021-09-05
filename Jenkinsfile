@@ -9,6 +9,8 @@ pipeline {
         ECRREGISTRY = '735972722491.dkr.ecr.us-west-2.amazonaws.com'
         IMAGENAME = 'haplet-registory'
         IMAGE_TAG = 'latest'
+        ECS_CLUSTER = 'main'
+        ECS_SERVICE = 'myapp-service'
     }
     stages {
        stage ('Cloning git & Build') {
@@ -56,6 +58,11 @@ pipeline {
                 sh 'docker push ${ECRREGISTRY}/${IMAGENAME}:${IMAGE_TAG}'
                 sh 'docker rmi ${ECRREGISTRY}/${IMAGENAME}:${IMAGE_TAG}'
             }
-        }       
+        } 
+        stage('update ecs service') {
+            steps {
+                sh 'aws ecs update-service --cluster ${ECS_CLUSTER} --service ${ECS_SERVICE} --force-new-deployment --region ${AWS_REGION}'
+            }
+        }  
         }
 }
