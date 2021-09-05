@@ -9,7 +9,7 @@ pipeline {
         ECRREGISTRY = '735972722491.dkr.ecr.us-west-2.amazonaws.com'
         IMAGENAME = 'haplet-registory'
         IMAGE_TAG = 'latest'
-        ECS_CLUSTER = 'main'
+        ECS_CLUSTER = 'myapp-cluster'
         ECS_SERVICE = 'myapp-service'
     }
     stages {
