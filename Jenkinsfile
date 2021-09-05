@@ -6,7 +6,7 @@ pipeline {
     }
     environment { 
         AWS_REGION = 'us-west-2'
-        ECRREGISTRY = '735972722491.dkr.ecr.us-west-2.amazonaws.com'
+        ECRREGISTRY = '735972722491.dkr.ecr.us-west-2.amazonaws.com' 
         IMAGENAME = 'haplet-registory'
         IMAGE_TAG = 'latest'
         ECS_CLUSTER = 'myapp-cluster'
@@ -52,6 +52,11 @@ pipeline {
                }
             }
         } 
+        stage(Login To ECR) {
+            steps {
+                sh 'aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECRREGISTRY}' 
+            }
+        }
          // For non-release candidates, This can be as simple as tagging the artifact(s) with a timestamp and the build number of the job performing the CI/CD process.
          stage('Publish the Artifact to ECR') {
             steps {
