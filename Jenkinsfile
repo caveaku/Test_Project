@@ -57,7 +57,8 @@ pipeline {
                 sh '/usr/local/bin/aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECRREGISTRY}' 
             }
         }
-         // For non-release candidates, This can be as simple as tagging the artifact(s) with a timestamp and the build number of the job performing the CI/CD process.
+         
+     // For non-release candidates, This can be as simple as tagging the artifact(s) with a timestamp and the build number of the job performing the CI/CD process.
          stage('Publish the Artifact to ECR') {
             steps {
                 sh 'docker push ${ECRREGISTRY}/${IMAGENAME}:${IMAGE_TAG}'
@@ -68,17 +69,11 @@ pipeline {
             steps {
                 sh '/usr/local/bin/aws ecs update-service --cluster ${ECS_CLUSTER} --service ${ECS_SERVICE} --force-new-deployment --region ${AWS_REGION}'
             }
-        }                 
+        }  
        stage('wait ecs service stable') {
             steps {
                 sh '/usr/local/bin/aws ecs wait services-stable --cluster ${ECS_CLUSTER} --service ${ECS_SERVICE} --region ${AWS_REGION}'
             }
-        }                    
-    }
-    post {
-        always {
-            junit 'target/surefire-reports/TEST-*.xml'
-            deleteDir()
-        }
+        } 
     }
 }
