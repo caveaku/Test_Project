@@ -18,6 +18,12 @@ pipeline {
                 checkout scm
             }
         }
+        stage('Unit Tests Execution') {
+            steps {
+                sh 'mvn surefire:test'
+            }
+        }
+
     }
 }
 
