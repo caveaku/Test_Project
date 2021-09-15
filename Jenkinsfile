@@ -28,6 +28,7 @@ pipeline {
             steps {
               withSonarQubeEnv('SonarQube') {
                 sh "mvn clean package sonar:sonar -Dsonar.host.url=http://34.229.200.7:9000 -Dsonar.login=8912b1866f72ab9c697e44d5befabf76bb4e16d0 -Dsonar.projectKey=jenkins -Dsonar.projectName=haplet-cave -Dsonar.projectVersion=1.0"
+                sh "cp ./webapp/target/webapp.* ."  
               }
             }
           }        
