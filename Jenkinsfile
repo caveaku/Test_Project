@@ -34,8 +34,8 @@ pipeline {
           } 
         stage('docker build and Tag Application') {
             steps {
-                 sh 'docker build -t ${IMAGENAME} .'
-                 sh 'docker tag ${IMAGENAME}:${IMAGE_TAG} ${ECRREGISTRY}/${IMAGENAME}:${IMAGE_TAG}'
+                 sh 'sudo docker build -t ${IMAGENAME} .'
+                 sh 'sudo docker tag ${IMAGENAME}:${IMAGE_TAG} ${ECRREGISTRY}/${IMAGENAME}:${IMAGE_TAG}'
             }
         }
     }
