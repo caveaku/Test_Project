@@ -7,7 +7,7 @@ pipeline {
     environment { 
         AWS_REGION = 'us-west-2'
         ECRREGISTRY = '735972722491.dkr.ecr.us-west-2.amazonaws.com' 
-        IMAGENAME = 'haplet-registory'
+        IMAGENAME = 'haplet-cave'
         IMAGE_TAG = 'latest'
         ECS_CLUSTER = 'myapp-cluster'
         ECS_SERVICE = 'myapp-service'
@@ -31,7 +31,14 @@ pipeline {
                 sh "cp ./webapp/target/webapp.* ."  
               }
             }
-          }        
+          } 
+        stage('docker build and Tag Application') {
+            steps {
+                 sh 'docker build -t ${IMAGENAME} .' # a docker image will be build
+                 sh 'docker tag ${IMAGENAME}:${IMAGE_TAG} ${ECRREGISTRY}/${IMAGENAME}:${IMAGE_TAG}'
+            }
+        }
+
     }
 }
 
