@@ -38,7 +38,6 @@ pipeline {
                  sh 'docker tag ${IMAGENAME}:${IMAGE_TAG} ${ECRREGISTRY}/${IMAGENAME}:${IMAGE_TAG}'
             }
         }
-
     }
 }
 
