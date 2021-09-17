@@ -28,17 +28,14 @@ pipeline {
             steps {
               withSonarQubeEnv('SonarQube') {
                 sh "mvn clean package sonar:sonar -Dsonar.host.url=http://54.85.48.113:9000 -Dsonar.login=8912b1866f72ab9c697e44d5befabf76bb4e16d0 -Dsonar.projectKey=jenkins -Dsonar.projectName=haplet-cave -Dsonar.projectVersion=1.0"
-                sh "cp ./webapp/target/webapp.* ."  
+                sh "cp /var/lib/jenkins/workspace/Haplet-CI@2/webapp.war ."  
               }
             }
           } 
         stage('docker build and Tag Application') {
             steps { 
-                 sh 'pwd'
-                 sh 'ls -al'
                  sh 'sudo docker build -t ${IMAGENAME} .'
                  sh 'sudo docker tag ${IMAGENAME}:${IMAGE_TAG} ${ECRREGISTRY}/${IMAGENAME}:${IMAGE_TAG}'
-            
             }
         }
     }
