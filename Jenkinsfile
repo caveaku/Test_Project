@@ -5,8 +5,8 @@ pipeline {
         jdk 'JAVA_HOME'
     }
     environment { 
-        AWS_REGION = 'us-west-2'
-        ECRREGISTRY = '735972722491.dkr.ecr.us-west-2.amazonaws.com' 
+        AWS_REGION = 'us-east-1'
+        ECRREGISTRY = '545135175756.dkr.ecr.us-east-1.amazonaws.com' 
         IMAGENAME = 'haplet-cave'
         IMAGE_TAG = 'latest'
         ECS_CLUSTER = 'myapp-cluster'
@@ -36,6 +36,20 @@ pipeline {
             steps { 
                  sh 'sudo docker build -t ${IMAGENAME} .'
                  sh 'sudo docker tag ${IMAGENAME}:${IMAGE_TAG} ${ECRREGISTRY}/${IMAGENAME}:${IMAGE_TAG}'
+            }
+        }
+        stage('Deployment Approval') {
+            steps {
+              script {
+                timeout(time: 20, unit: 'MINUTES') {
+                 input(id: 'Deploy Gate', message: 'Deploy Application to Dev ?', ok: 'Deploy')
+                 }
+               }
+            }
+        }
+        stage('Login To ECR') {
+            steps {
+                sh 'aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECRREGISTRY}' 
             }
         }
     }
