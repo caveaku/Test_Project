@@ -47,16 +47,11 @@ pipeline {
                }
             }
         }
-        stage('Login To ECR') {
-            steps {
-                sh '/var/lib/jenkins/workspace/Haplet-CI/aws ecr get-login-password --region ${AWS_REGION} | sudo docker login --username AWS --password-stdin ${ECRREGISTRY}' 
-            }
-        }
         // For non-release candidates, This can be as simple as tagging the artifact(s) with a timestamp and the build number of the job performing the CI/CD process.
          stage('Publish the Artifact to ECR') {
             steps {
-                sh '/var/lib/jenkins/workspace/Haplet-CI/sudo docker push ${ECRREGISTRY}/${IMAGENAME}:${IMAGE_TAG}'
-                sh '/var/lib/jenkins/workspace/Haplet-CI/sudo docker rmi ${ECRREGISTRY}/${IMAGENAME}:${IMAGE_TAG}'
+                sh 'sudo docker push ${ECRREGISTRY}/${IMAGENAME}:${IMAGE_TAG}'
+                sh 'sudo docker rmi ${ECRREGISTRY}/${IMAGENAME}:${IMAGE_TAG}'
             }
         }
     }
